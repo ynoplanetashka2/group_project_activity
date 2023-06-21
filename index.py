@@ -3,56 +3,58 @@ import numpy  as np
 
 from lib import is_stable
 
-cos_coef_range = np.arange(.1, 1, .1)
-omega_range = np.arange(.1, 1, .1)
-points_count = cos_coef_range.size * omega_range.size
+epsilon_range = np.arange(0, .2, .006)
+delta_range = np.arange(0, .35, .006)
+points_count = epsilon_range.size * delta_range.size
 
 stable_values = []
 i = 0
-for cos_coef in cos_coef_range:
-    for omega in omega_range:
+for epsilon in epsilon_range:
+    for delta in delta_range:
         print(i / points_count)
         i += 1
         if is_stable(
-            cos_coef = cos_coef,
-            omega = omega,
+            epsilon = epsilon,
+            delta = delta,
         ):
             stable_values.append({
-                'cos_coef': cos_coef,
-                'omega': omega,
+                'epsilon': epsilon,
+                'delta': delta,
             })
 
-stable_cos_coef_values = list(map(lambda item: item['cos_coef'], stable_values))
-stable_omega_values = list(map(lambda item: item['omega'], stable_values))
+stable_epsilon_values = list(map(lambda item: item['epsilon'], stable_values))
+stable_delta_values = list(map(lambda item: item['delta'], stable_values))
 
-stable_cos_coef_values = np.array(stable_cos_coef_values)
-stable_omega_values = np.array(stable_omega_values)
+stable_epsilon_values = np.array(stable_epsilon_values)
+stable_delta_values = np.array(stable_delta_values)
 
 print(stable_values)
 fig, ax = plt.subplots()
 ax.plot(
-    stable_cos_coef_values, 
-    stable_omega_values,
+    stable_delta_values,
+    stable_epsilon_values, 
     'o',
     color = 'blue',
     )
 
-unstable_cos_coef_values = []
-unstable_omega_values = []
-for cos_coef in cos_coef_range:
-    for omega in omega_range:
-        if not { 'cos_coef': cos_coef, 'omega': omega } in stable_values:
-            unstable_cos_coef_values.append(cos_coef)
-            unstable_omega_values.append(omega)
+unstable_epsilon_values = []
+unstable_delta_values = []
+for epsilon in epsilon_range:
+    for delta in delta_range:
+        if not { 'epsilon': epsilon, 'delta': delta } in stable_values:
+            unstable_epsilon_values.append(epsilon)
+            unstable_delta_values.append(delta)
 
-unstable_cos_coef_values = np.array(unstable_cos_coef_values)
-unstable_omega_values = np.array(unstable_omega_values)
+unstable_epsilon_values = np.array(unstable_epsilon_values)
+unstable_delta_values = np.array(unstable_delta_values)
 
 ax.plot(
-    unstable_cos_coef_values,
-    unstable_omega_values,
+    unstable_delta_values,
+    unstable_epsilon_values,
     'o',
     color = 'red',
 )
+ax.set_xlabel('delta')
+ax.set_ylabel('epsilon')
 
 plt.show()

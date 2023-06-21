@@ -17,9 +17,9 @@ def solve_de_inner(**argv):
     return current
 
 def solve_de(**argv):
-    omega = argv['omega']
-    cos_coef = argv['cos_coef']
-    coef = lambda time: - omega * omega * (1 + cos_coef * np.cos(time))
+    delta = argv['delta']
+    epsilon = argv['epsilon']
+    coef = lambda time: - (delta + epsilon * np.cos(time))
     columns = []
     initials = [
         np.array([1, 0], float),
