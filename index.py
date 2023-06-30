@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy  as np
+import time
 
 from lib import is_stable
 
-epsilon_range = np.arange(0, .2, .006)
-delta_range = np.arange(0, .35, .006)
+epsilon_range = np.linspace(0, 0.3, 30)
+delta_range = np.linspace(0.15, 0.35, 50)
 points_count = epsilon_range.size * delta_range.size
 
 stable_values = []
@@ -57,4 +58,5 @@ ax.plot(
 ax.set_xlabel('delta')
 ax.set_ylabel('epsilon')
 
+plt.savefig(f'./images/{time.time()}.png')
 plt.show()

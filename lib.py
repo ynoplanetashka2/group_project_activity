@@ -28,7 +28,7 @@ def solve_de(**argv):
     for initial in initials:
         columns.append(
             solve_de_inner(
-                step = .001,
+                step = .0007,
                 start = 0,
                 end = 2 * np.pi,
                 initial = initial,
@@ -44,6 +44,9 @@ def is_stable(**argv):
     for i in range(2):
         eigen = eigvals[i]
         abs_val = np.abs(eigen)
-        if abs_val <= 1:
-            return True
-    return False
+        if abs_val > 1.005:
+            return False
+    return True
+    #     if abs_val <= 1:
+    #         return True
+    # return False
